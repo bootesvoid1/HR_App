@@ -1,0 +1,22 @@
+<div class="container">
+
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm" class="input-group">
+
+    <label for="candidate-name">Candidate Name:</label>
+    <input type="text" id="candidate-name" name="candidateName" ngModel required>
+
+    <label for="course-name">Course Name:</label>
+    <input type="text" id="course-name" name="courseName" ngModel required>
+
+    <label for="credit-hours">Credit hours:</label>
+    <input type="number" id="credit-hours" name="creditHours" ngModel required>
+
+    <label for="end-date">End date:</label>
+    <input type="date" id="end-date" name="endDate" ngModel required>
+
+    <label for="notes">Notes:</label>
+    <textarea id="notes" name="notes" ngModel></textarea>
+
+    <button type="submit" color="Warn">Generate PDF</button>
+  </form>
+</div>

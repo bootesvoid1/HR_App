@@ -1,0 +1,22 @@
+<table class="certificates-table">
+  <thead>
+    <tr>
+      <th>Candidate Name</th>
+      <th>Course Name</th>
+      <th>Credit Hours</th>
+      <th>End Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let certificate of certificates">
+      <td>{{ certificate.candidateName }}</td>
+      <td>{{ certificate.courseName }}</td>
+      <td>{{ certificate.creditHours }}</td>
+      <td>{{ certificate.endDate  }}</td>
+      <td>
+          <button (click)="removeCertificate(certificate)">Remove</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
