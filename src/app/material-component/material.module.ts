@@ -13,29 +13,17 @@ import { MaterialRoutes } from './material.routing';
 import { CertificateComponent } from './Certificate/certificate.component';
 
 import { CertificateListComponent } from './certificate-list/certificate-list.component';
-import { ListsComponent } from './lists/lists.component';
-import { MenuComponent } from './menu/menu.component';
-import { TabsComponent } from './tabs/tabs.component';
-import { StepperComponent } from './stepper/stepper.component';
-import { ExpansionComponent } from './expansion/expansion.component';
-import { ChipsComponent } from './chips/chips.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
-import { ProgressSnipperComponent } from './progress-snipper/progress-snipper.component';
-import { ProgressComponent } from './progress/progress.component';
-import {
-  DialogComponent,
-  DialogOverviewExampleDialogComponent
-} from './dialog/dialog.component';
-import { TooltipComponent } from './tooltip/tooltip.component';
-import { SnackbarComponent } from './snackbar/snackbar.component';
-import { SliderComponent } from './slider/slider.component';
-import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
+import { ModifyCertificateComponent } from './certificate-list/modify-certificate/modify-certificate.component';
+
+
+
 
 
 @NgModule({
   declarations: [
     CertificateComponent,
     CertificateListComponent,
+    ModifyCertificateComponent,
 
   ],
   imports: [
@@ -46,20 +34,7 @@ import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
     FormsModule,
     ReactiveFormsModule,
     CdkTableModule,
-    ListsComponent,
-    MenuComponent,
-    TabsComponent,
-    StepperComponent,
-    ExpansionComponent,
-    ChipsComponent,
-    ToolbarComponent,
-    ProgressSnipperComponent,
-    ProgressComponent,
-    DialogComponent,
-    TooltipComponent,
-    SnackbarComponent,
-    SliderComponent,
-    SlideToggleComponent,
+
 
   ],
   providers: [],

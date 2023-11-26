@@ -1,9 +1,8 @@
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { AppRoutes } from './app.routing';
 import { AppComponent } from './app.component';
@@ -17,8 +16,9 @@ import { DemoMaterialModule } from './demo-material-module';
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
 import { LoginComponent } from './login/login.component';
-import { CertificateService } from './material-component/Certificate/certificate.service';
-
+import { CertificateService} from './services/certificate.service';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { httpInterceptorProviders } from './_helpers/http.interceptor';
 
 
 @NgModule({
@@ -47,7 +47,8 @@ import { CertificateService } from './material-component/Certificate/certificate
     {
       provide: LocationStrategy,
       useClass: PathLocationStrategy
-    }, CertificateService
+    }, CertificateService,  {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
+      httpInterceptorProviders
   ],
 
   bootstrap: [AppComponent]

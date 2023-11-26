@@ -2,9 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const Certificate = require('./model/certificate');
-
-
+const Certificate = require('./models/certificate');
 const app = express();
 
 mongoose
@@ -18,10 +16,9 @@ mongoose
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
-
-
-app.post('/api/certificates', (req, res, next) => {
+app.post("/api/certificates", (req, res, next) => {
   const certificateBody = req.body;
   const certificate = new Certificate(certificateBody);
 
@@ -32,13 +29,19 @@ app.post('/api/certificates', (req, res, next) => {
     })
     .catch(error => {
       console.error(error);
-      res.status(500).json({ message: 'Failed to add Certificate.' });
+      res.status(500).json({ message: 'Failed to add Certificate' });
     });
 });
+
 
 app.get('/api/certificates', (req, res, next) => {
   Certificate.find()
     .then((certificates) => {
+      if (!certificates || certificates.length === 0) {
+
+        return res.status(404).json({ message: 'No certificates found.' });
+      }
+
       console.log(certificates);
       res.status(200).json({
         message: 'Certificates fetched successfully',
@@ -50,4 +53,32 @@ app.get('/api/certificates', (req, res, next) => {
       res.status(500).json({ message: 'Failed to fetch Certificates.' });
     });
 });
-module.exports = app;
+ app.delete('/api/certificates/:id', (req, res, next) => {
+  const id = req.params.id;
+
+  Certificate.findByIdAndDelete(id)
+     .then((certificate) => {
+       if (!certificate) {
+         return res.status(404).json({ message: 'No certificate found with this ID.' });
+       }
+       res.status(200).json({
+         message: 'Certificate deleted successfully',
+         certificate: certificate
+       });
+     })
+     .catch(error => {
+       console.error(error);
+       res.status(500).json({ message: 'Failed to delete certificate.' });
+     });
+    });
+     app.put('/api/certificates/:id', async(req, res, next) => {
+      const id = req.params.id;
+      const certificateBody = req.body;
+
+      console.log('certificateBody', certificateBody)
+      const certificate = await Certificate.findByIdAndUpdate(id,{$set:certificateBody},{$new:true});
+      res.status(200).json(certificate);
+      })
+
+  module.exports = app;
+

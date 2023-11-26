@@ -1,22 +1,35 @@
-<table class="certificates-table">
-  <thead>
-    <tr>
-      <th>Candidate Name</th>
-      <th>Course Name</th>
-      <th>Credit Hours</th>
-      <th>End Date</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let certificate of certificates">
-      <td>{{ certificate.candidateName }}</td>
-      <td>{{ certificate.courseName }}</td>
-      <td>{{ certificate.creditHours }}</td>
-      <td>{{ certificate.endDate  }}</td>
-      <td>
-          <button (click)="removeCertificate(certificate)">Remove</button>
-      </td>
-    </tr>
-  </tbody>
+<table mat-table class="mat-elevation-z8" [dataSource]="certificates">
+  <ng-container matColumnDef="candidateName">
+    <th mat-header-cell *matHeaderCellDef>Candidate Name</th>
+    <td mat-cell *matCellDef="let certificate">{{ certificate.candidateName }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="courseName">
+    <th mat-header-cell *matHeaderCellDef>Course Name</th>
+    <td mat-cell *matCellDef="let certificate">{{ certificate.courseName }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="creditHours">
+    <th mat-header-cell *matHeaderCellDef>Credit Hours</th>
+    <td mat-cell *matCellDef="let certificate">{{ certificate.creditHours }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="endDate">
+    <th mat-header-cell *matHeaderCellDef>End Date</th>
+    <td mat-cell *matCellDef="let certificate">{{ certificate.endDate | date }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let certificate">
+
+      <button  mat-raised-button color="primary" class="btn" (click)="modifyCertificate(certificate)">Modify</button>
+      <button  mat-raised-button color="primary" class="btn" (click)="generatePDF(certificate)">Generate PDF</button>
+      <button mat-raised-button color="warn" class="btn" (click)="removeCertificate(certificate)">Remove</button>
+
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>

@@ -33,7 +33,7 @@ form {
   }
 
   textarea {
-    height: 100px;
+    height: 50px;
   }
 
   button[type="submit"] {
@@ -54,5 +54,14 @@ form {
 
   .container {
     margin-top: 10px;
+  }
+  .mat-form-actions{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:20px;
+    width:50%;
+    margin:20px;
+    margin-left: 150px;
   }
 }

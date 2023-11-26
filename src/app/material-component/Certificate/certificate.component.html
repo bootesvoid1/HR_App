@@ -1,22 +1,34 @@
 <div class="container">
+  <form [formGroup]="certificateForm" class="mat-elevation-z4 mat-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Candidate Name:</mat-label>
+      <input type="text" id="candidate-name" formControlName="candidateName" matInput required>
+    </mat-form-field>
 
-  <form (ngSubmit)="onSubmit(f)" #f="ngForm" class="input-group">
+    <mat-form-field appearance="outline">
+      <mat-label>Course Name:</mat-label>
+      <input type="text" id="course-name" formControlName="courseName" matInput required>
+    </mat-form-field>
 
-    <label for="candidate-name">Candidate Name:</label>
-    <input type="text" id="candidate-name" name="candidateName" ngModel required>
+    <mat-form-field appearance="outline">
+      <mat-label>Credit hours:</mat-label>
+      <input type="number" id="credit-hours" formControlName="creditHours" matInput required>
+    </mat-form-field>
 
-    <label for="course-name">Course Name:</label>
-    <input type="text" id="course-name" name="courseName" ngModel required>
+    <mat-form-field appearance="outline">
+      <mat-label>End date:</mat-label>
+      <input type="date" id="end-date" formControlName="endDate" matInput required>
+    </mat-form-field>
 
-    <label for="credit-hours">Credit hours:</label>
-    <input type="number" id="credit-hours" name="creditHours" ngModel required>
+    <mat-form-field appearance="outline">
+      <mat-label>Notes:</mat-label>
+      <textarea id="notes" formControlName="notes" matInput></textarea>
+    </mat-form-field>
 
-    <label for="end-date">End date:</label>
-    <input type="date" id="end-date" name="endDate" ngModel required>
-
-    <label for="notes">Notes:</label>
-    <textarea id="notes" name="notes" ngModel></textarea>
-
-    <button type="submit" color="Warn">Generate PDF</button>
+    <div class="mat-form-actions">
+      <button type="submit" mat-stroked-button color="primary" (click)="saveCertificate()">Save</button>
+      <button type="submit" mat-stroked-button color="warn" (click)="generatePDF()">Generate PDF</button>
+    </div>
   </form>
 </div>
+
