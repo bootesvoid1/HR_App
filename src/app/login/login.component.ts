@@ -17,37 +17,35 @@ export class LoginComponent implements OnInit {
   hide = true;
   isLoggedIn = false;
   isLoginFailed = false;
-  roles: string[] = [];
+  isAdmin!:boolean;
   form: any = {
     username: null,
     password: null
   };
   constructor(private _router:Router,private authService: AuthService, private storageService: StorageService) { }
 
-  ngOnInit():void {
+  ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
-      this.roles = this.storageService.getUser().roles;
+      const isAdmin = JSON.parse(window.localStorage.getItem('isAdmin') as string);
+      this.isAdmin = isAdmin;
+      this._router.navigate(['certificate']);
     }
-  }
+   }
   onSubmit(): void {
     console.log(this.form)
     const { username, password } = this.form;
 
-    this.authService.login(username, password).subscribe({
-      next: data => {
-        this.storageService.saveUser(data);
+    this.authService.login(username, password).subscribe(
+      (response: any) => {
 
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
-        this.roles = this.storageService.getUser().roles;
-        this.reloadPage();
+        this.storageService.saveToken(response.accessToken);
       },
-      error: err => {
-        this.errorMessage = err.error.message;
+      (error) => {
+        this.errorMessage = error.message;
         this.isLoginFailed = true;
-      }
-    });
+      })
+
   }
 
   reloadPage(): void {

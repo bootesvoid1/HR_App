@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
-app.use('/api/user' , users)
+app.use('/api/users' , users)
 app.use('/api/auth', auth)
 app.use('/api/certificates',certificate)
 app.listen(process.env.PORT || 3000, function () {

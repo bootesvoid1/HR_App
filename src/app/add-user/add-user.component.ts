@@ -1,7 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { Router } from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { User } from '../user-list/user.model';
+import { UserListComponent } from '../user-list/user-list.component';
 
 @Component({
   selector: 'app-add-user',
@@ -20,22 +23,24 @@ export class AddUserComponent {
   hide = true;
   isLoggedIn = false;
   isLoginFailed = false;
-  roles: string[] = [];
+  isAdmin!:boolean;
   form: any = {
     username: null,
     password: null
   };
-  constructor(private _router:Router,private authService: AuthService, private storageService: StorageService) { }
+  constructor(private _router:Router,private authService: AuthService, private storageService: StorageService
+    ,public dialogRef: MatDialogRef<UserListComponent>,@Inject(MAT_DIALOG_DATA)
+    public data: { users: User[], user: User }) { }
 
   ngOnInit():void {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
-      this.roles = this.storageService.getUser().roles;
+      this.isAdmin = this.storageService.getUser().isAdmin;
     }
   }
   onSubmit(): void {
     console.log(this.form)
-    const { username, password } = this.form;
+    const { username, password,isAdmin } = this.form;
 
     this.authService.login(username, password).subscribe({
       next: data => {
@@ -43,8 +48,8 @@ export class AddUserComponent {
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.roles = this.storageService.getUser().roles;
-        this.reloadPage();
+        this.isAdmin = this.storageService.getUser().isAdmin;
+
       },
       error: err => {
         this.errorMessage = err.error.message;
@@ -53,7 +58,4 @@ export class AddUserComponent {
     });
   }
 
-  reloadPage(): void {
-    window.location.reload();
-  }
 }

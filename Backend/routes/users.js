@@ -1,8 +1,8 @@
 const User = require("../models/admin");
 const CryptoJS = require("crypto-js");
-const { checkLogin } = require("./userMiddleware");
+ const { checkLogin } = require("./userMiddleware");
 const router = require("express").Router();
-
+const bodyParser = require('body-parser');
 const encryptPassword = (password) => {
     return CryptoJS.AES.encrypt(
         password,
@@ -18,27 +18,33 @@ const omitPassword = (user) => {
 // UPDATE
 // Middleware to verify current password
 const verifyCurrentPassword = async (req, res, next) => {
-    try {
-      const { currentPassword } = req.body;
-      const user = await User.findById(req.params.id);
-  
-      if (!user) {
-        return res.status(404).json({ error: "User not found" });
-      }
-  
-      const isPasswordValid = user.comparePassword(currentPassword);
-  
-      if (!isPasswordValid) {
-        return res.status(401).json({ error: "Invalid current password" });
-      }
-  
-      req.user = user; // Attach the user object to the request for later use
-      next();
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
+  try {
+    const { currentPassword } = req.body;
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
-  };
-  
+
+    const decryptedPassword = CryptoJS.AES.decrypt(
+      user.password,
+      process.env.CRYPTOJS_KEY
+    ).toString(CryptoJS.enc.Utf8);
+
+    const isPasswordValid = currentPassword === decryptedPassword;
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: "Invalid current password" });
+    }
+
+    req.user = user;
+    next();
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+ };
+
+router.use(bodyParser.json());
   router.put("/:id", verifyCurrentPassword, async (req, res) => {
     try {
         const { password } = req.body;
@@ -60,7 +66,7 @@ const verifyCurrentPassword = async (req, res, next) => {
     }
 });
 
-  
+
 // DELETE
 router.delete("/:id", async (req, res) => {
     try {
@@ -82,6 +88,7 @@ router.get("/find/:id", async (req, res) => {
 });
 
 // GET ALL USER
+//
 router.get("/",checkLogin ,async (req, res) => {
     try {
         const users = await User.find().limit(5).sort({ createdAt: -1 });
@@ -91,6 +98,24 @@ router.get("/",checkLogin ,async (req, res) => {
     }
 
 });
+router.post('/', async (req, res) => {
+  try {
+    const { username, password, isAdmin } = req.body;
+    const encryptedPassword = encryptPassword(password);
+
+    const user = new User({
+      username,
+      password: encryptedPassword,
+      isAdmin
+    });
+
+    const savedUser = await user.save();
+
+    res.status(201).json(omitPassword(savedUser));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+ });
 
 
 module.exports = router;

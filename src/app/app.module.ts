@@ -21,6 +21,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { HttpRequestInterceptor, httpInterceptorProviders } from './_helpers/http.interceptor';
 import { AddUserComponent } from './add-user/add-user.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { AuthInterceptor } from './http.interceptor';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { UserListComponent } from './user-list/user-list.component';
       provide: LocationStrategy,
       useClass: PathLocationStrategy
     }, CertificateService,  {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpRequestInterceptor,

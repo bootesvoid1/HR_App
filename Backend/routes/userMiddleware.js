@@ -34,10 +34,10 @@ const checkAuthorization = (allowedRoles) => {
     };
 };
 
-  
+
 
 module.exports = {
     checkLogin,
     checkAuthorization,
-    
+
 };

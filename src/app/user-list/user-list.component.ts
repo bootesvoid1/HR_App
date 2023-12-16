@@ -13,28 +13,27 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class UserListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  displayedColumns: string[] = ['name', 'password', 'isAdmin','Actions'];
+displayedColumns: string[] = ['username','isAdmin','Actions'];
  user!:User;
  users:User[]=[];
  dataSource = new MatTableDataSource<User>(this.users);
-
+ _id!: string;
  constructor(private userService: UserService, public dialog: MatDialog){}
 
  ngOnInit() {
-  //  this.getUsers();
-  this.users=[{name:"user1",password:"pass",isAdmin:false},
-  {name:"user2",password:"pass2",isAdmin:false},
-  {name:"user2",password:"pass2",isAdmin:false}
+    this.getUsers();
+//   this.users=[{name:"user1",password:"pass",isAdmin:false},
+//   {name:"user2",password:"pass2",isAdmin:false},
+//   {name:"user2",password:"pass2",isAdmin:false}
 
-]
+// ]
 this.dataSource = new MatTableDataSource<User>(this.users);
  }
  ngAfterViewInit() {
   this.dataSource.paginator = this.paginator;
  }
  deleteUser(user:any) {
-   this.userService.DeleteUser(user)
+   this.userService.deleteUser(user)
  }
 
  addUser() {
@@ -66,7 +65,8 @@ this.dataSource = new MatTableDataSource<User>(this.users);
  getUsers() {
    this.userService.getUsers().subscribe({
      next : (res:any)=>{
-       console.log(res.users);
+      console.log(res);
+      // console.log(res.users);
        this.users = res.users;
        this.dataSource = new MatTableDataSource<User>(this.users);
      }
@@ -95,10 +95,27 @@ this.dataSource = new MatTableDataSource<User>(this.users);
  }
 
  modify(user: User) {
-   this.userService.ModifyUser(user);
+  this.userService.getUserId(user.name).subscribe(
+  (id: string) => {
+   this.userService.modifyUser(id, user).subscribe(
+    (response: User) => {
+      // Handle the response
+      // Update the user data in your component
+      this.user = response;
+    },
+    (error) => {
+      // Handle the error
+    }
+   );
+  },
+  (error) => {
+   // Handle the error
+  }
+  );
  }
 
+
  add(user: User) {
-   this.userService.AddUser(user);
+   this.userService.addUser(user);
  }
 }
