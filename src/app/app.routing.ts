@@ -9,6 +9,7 @@ export const AppRoutes: Routes = [
     redirectTo: 'Login',
     pathMatch: 'full'
   },
+  
   {
     path: 'Login',
     component: LoginComponent

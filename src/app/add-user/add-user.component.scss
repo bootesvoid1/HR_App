@@ -1,0 +1,140 @@
+$black: black;
+$white: #fff;
+$blue: rgb(22, 7, 141);
+$facebookBlue: #3b5998;
+$shadowColor: rgba(0, 0, 0, 0.1);
+$green: #42b72a;
+$lightgreen:#7bf828;
+.mat-icon {
+  color: $black;
+}
+
+.content {
+  max-width: 1000px;
+  align-items: center;
+  min-height: auto; /* Ensure the content takes up at least the full viewport height */
+  display: flex;
+  justify-content: center; /* Horizontally center content */
+margin-left: 250px;
+}
+
+.box {
+  border-radius: 20px;
+  box-shadow: 0 0 20px 0 $shadowColor;
+  padding: 40px;
+  width: 400px;
+  background-color: $white;
+  margin-left: 60px;
+  margin-top:200px;
+}
+h2 {
+  color: $black;
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-box {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+
+}
+
+input[type="submit"] {
+  background-color: $blue;
+  border: none;
+  border-radius: 6px;
+  color: $white;
+  cursor: pointer;
+  font-size: 17px;
+  height: 40px;
+  margin-bottom: 20px;
+  outline: none;
+
+  &:hover {
+    background-color: $black;
+    color: $white;
+  }
+}
+
+.social-button {
+  background-color: $white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    height: 40px;
+  margin-bottom: 20px;
+  outline: none;
+  text-decoration: none;
+  transition: 0.2s;
+  gap: 10px;
+   font-size: 17px;
+  line-height: 48px;
+  padding: 0 16px;
+  &.facebook {
+    background-color: $facebookBlue;
+    border-color: $facebookBlue;
+    color: $white;
+  }
+}
+
+.creation {
+  color: $black;
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+.container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  // background-image: url('/assets/images/wallpaperflare.com_wallpaper.jpg');
+  // background-repeat: no-repeat;
+  // background-size: cover;
+  background-color: #fff;
+}
+.header{
+  text-align: center;
+  text-decoration: solid;
+}
+.signup-btn{
+  background-color: #36a420;
+  border-color: #36a420;
+  color:#fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 17px;
+  line-height: 48px;
+  padding: 0 16px;
+  font-family: inherit;
+  cursor: pointer;
+  margin-left: 25%;
+  width: 140px;
+  &:hover {
+    background-color: $lightgreen;
+    color: $white;
+  }
+
+}
+img{
+  width :280px ;
+  height :80px ;
+  margin-left: 20px ;
+}

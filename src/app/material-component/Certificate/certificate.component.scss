@@ -14,6 +14,7 @@ form {
   padding: 20px;
   border: 2px solid #ccc;
   border-radius: 10px;
+  max-height:700px;
 
   label {
     font-weight: bold;
@@ -61,7 +62,6 @@ form {
     align-items: center;
     padding:20px;
     width:50%;
-    margin:20px;
     margin-left: 150px;
   }
 }

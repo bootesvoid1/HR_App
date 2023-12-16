@@ -1,23 +1,39 @@
 <div class="container" >
 <div class="content">
   <div class="box">
-     <div class="header"><h2>Welcome</h2></div>
-    <form (submit)="Login(loginForm)" #loginForm="ngForm" >
+    <img class="logo-img" src="assets/images/logo (1).png" alt="logo"  >
+
+    <form *ngIf="!isLoggedIn"
+    name="form"
+    (ngSubmit)="f.form.valid && onSubmit()"
+    #f="ngForm"
+    novalidate >
       <mat-form-field appearance="outline">
         <mat-label>Enter your Name</mat-label>
         <input
           matInput
           placeholder="User Name"
-          name="Name"
-          id="Name"
-          ngModel
+          type="text"
+          class="form-control"
+          name="username"
+          [(ngModel)]="form.username"
           required
+          #username="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
+
         />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Enter your password</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'" name="password" id="password" ngModel required/>
+        <input matInput [type]="hide ? 'password' : 'text'" type="password"
+        class="form-control"
+        name="password"
+        [(ngModel)]="form.password"
+        required
+        minlength="6"
+        #password="ngModel"
+        [ngClass]="{ 'is-invalid': f.submitted && password.errors }"/>
         <button
           mat-icon-button
           matSuffix
@@ -30,14 +46,19 @@
       </mat-form-field>
 
     <div class="buttons">
-      <input type="submit" name="Login" value="Login"  />
-    </div>
-    </form>
+      <input type="submit" name="Login" value="Log In"  />
+
+      </div>
+          <div class="form-group">
+        <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger" role="alert">
+          Login failed: {{ errorMessage }}
+        </div>
 
       </div>
   <div class="right-content">
     <div class="right-content-img"></div>
 
   </div>
-</div>
-</div>
+
+
+
