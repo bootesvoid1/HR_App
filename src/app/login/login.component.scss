@@ -10,12 +10,12 @@ $lightgreen:#7bf828;
 }
 
 .content {
-  max-width: 1000px;
+  // max-width: 1000px;
   align-items: center;
-  min-height: 100vh; /* Ensure the content takes up at least the full viewport height */
+  // min-height: 100vh; /* Ensure the content takes up at least the full viewport height */
   display: flex;
   justify-content: center; /* Horizontally center content */
- margin-left: 250px;
+margin-top: 50vh;
 }
 
 .box {
@@ -24,8 +24,8 @@ $lightgreen:#7bf828;
   padding: 40px;
   width: 400px;
   background-color: $white;
-  margin-left: 250px;
-  margin-bottom: 50px;
+  margin-top:-10%;
+
 }
 h2 {
   color: $black;

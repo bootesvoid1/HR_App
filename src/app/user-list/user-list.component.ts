@@ -65,10 +65,10 @@ this.dataSource = new MatTableDataSource<User>(this.users);
  getUsers() {
    this.userService.getUsers().subscribe({
      next : (res:any)=>{
-      console.log(res);
+      // console.log(res);
       // console.log(res.users);
-       this.users = res.users;
-       this.dataSource = new MatTableDataSource<User>(this.users);
+      //  this.users = res.users;
+       this.dataSource = new MatTableDataSource<User>(res);
      }
    });
  }

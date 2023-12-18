@@ -17,7 +17,7 @@ export class AuthService {
 
   login(username: string, password: string): Observable<any> {
     return this.http.post(
-     AUTH_API + 'signin',
+     AUTH_API + 'login',
      {
        username,
        password,
@@ -25,7 +25,7 @@ export class AuthService {
      httpOptions
     ).pipe(
      tap((response: any) => {
-
+     
        this.storageService.saveToken(response.accessToken);
 
        this.storageService.saveIsAdmin(response.isAdmin);
@@ -61,7 +61,7 @@ export class AuthService {
     window.alert(errorMessage);
     return throwError(errorMessage);
    }
-  
+
 
    authenticated(): boolean {
     return !!this.storageService.getToken();
