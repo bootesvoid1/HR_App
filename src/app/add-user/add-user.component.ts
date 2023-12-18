@@ -18,11 +18,10 @@ import { UserDTO } from './user-pdo';
 })
 export class AddUserComponent {
 
-cancel() :void {
-  this.dialogRef.close();
-}
   @Input() buttonLabel!: string;
   @Input() buttonFunction!: Function;
+  form: { username: string, password: string, isAdmin: any } = { username: '', password: '', isAdmin: false };
+
   username! : string ;
   password!: string;
   errorMessage!: string;
@@ -30,13 +29,16 @@ cancel() :void {
   isLoggedIn = false;
   isLoginFailed = false;
   isAdmin!:boolean;
-  form: any = {
-    username: null,
-    password: null
-  };
+
   constructor(private _router:Router,private authService: AuthService,private userService:UserService
-    ,public dialogRef: MatDialogRef<UserListComponent>,@Inject(MAT_DIALOG_DATA)
-    public data: { users: User[], user: User }) { }
+    ,public dialogRef: MatDialogRef<UserListComponent>,@Inject(MAT_DIALOG_DATA)public data: any)
+
+     {
+      this.form = {username: this.data.user.username, password: '', isAdmin: this.data.user.isAdmin ? 'true' : 'false'}
+      console.log(data)
+      const buttonFunction = this.data.buttonFunction
+      const user = this.data.user;}
+    // console.log(user) }
 
   ngOnInit():void {
 
@@ -63,6 +65,7 @@ cancel() :void {
 
 
     modifyUser(id: string): void {
+      // console.log(this.form)
       const { username, password, isAdmin } = this.form;
       let updatedUser = new User(username, password, isAdmin);
 
@@ -93,5 +96,8 @@ cancel() :void {
           // Handle error if needed
         }
       );
+    }
+    cancel() :void {
+      this.dialogRef.close();
     }
   }

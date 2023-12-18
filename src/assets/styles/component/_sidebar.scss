@@ -21,10 +21,10 @@ mat-sidenav {
         display: none;
       }
       &.selected > .mdc-list-item__content > a {
-        background: $themecolor-alt;
+        background:$themecolor-alt ;
         border-radius: $radius;
         color: $white;
-  
+
         mat-icon {
           color: $white;
         }
@@ -72,7 +72,7 @@ mat-sidenav {
       }
     }
     .mat-mdc-list-item.selected .mdc-list-item__content a{
-      background: $themecolor-alt;
+      background: #1e88e5;
       border-radius: $radius;
       color: $white;
 
@@ -88,11 +88,11 @@ mat-sidenav {
   /*******************
   use profile section
   ******************/
-  
+
   .user-profile {
     position: relative;
     background-size: cover;
-  
+
     .profile-img {
       width: 50px;
       margin-left: 30px;
@@ -175,10 +175,9 @@ mat-sidenav {
       }
     }
   }
-  
+
   .sidebar-closed #snav {
     &.mat-sidenav ~ .mat-drawer-content {
       margin-left: 0px !important;
     }
   }
-  

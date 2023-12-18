@@ -23,7 +23,7 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { AuthInterceptor } from './http.interceptor';
 import { AuthGuard } from './services/auth-guard.service';
-import { ModifyUserComponent } from './modify-user/modify-user.component';
+
 
 
 @NgModule({
@@ -35,7 +35,7 @@ import { ModifyUserComponent } from './modify-user/modify-user.component';
     LoginComponent,
     AddUserComponent,
     UserListComponent,
-    ModifyUserComponent,
+
 
   ],
   imports: [

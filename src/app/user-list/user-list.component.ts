@@ -14,11 +14,14 @@ import { switchMap } from 'rxjs';
 })
 export class UserListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-displayedColumns: string[] = ['username','isAdmin','Actions'];
+  form: { username: string, password: string, isAdmin: boolean } = { username: '', password: '', isAdmin: false };
+
+  displayedColumns: string[] = ['username','isAdmin','Actions'];
  user!:User;
  users:User[]=[];
  dataSource = new MatTableDataSource<User>(this.users);
  _id!: string;
+ dialogueOpen = false;
  constructor(private userService: UserService, public dialog: MatDialog){}
 
  ngOnInit() {
@@ -47,25 +50,25 @@ displayedColumns: string[] = ['username','isAdmin','Actions'];
  }
 
  addUser() {
-  //  console.log(this.user);
-   const dialogRef = this.dialog.open(AddUserComponent, {
-     width: '450px',
-     data: {
-       buttonLabel: 'Add',
-       user: this.user,
-       buttonFunction: this.add,
-     }
-   });
+  if (!this.dialogueOpen) {
+    const dialogRef = this.dialog.open(AddUserComponent, {
+      width: '450px',
+      data: {
+        buttonLabel: 'Add',
+        user: this.user,
+        buttonFunction: this.add,
+      }
+    });
 
-   dialogRef.afterClosed().subscribe(result => {
-     if (result) {
-       this.getUsers();
-       console.log(result);
-     } else {
-       console.log('Dialog closed without result');
-     }
-   });
- }
+    // Set the flag to true when the dialogue is opened
+    this.dialogueOpen = true;
+   this.getUsers();
+    // After the dialogue is closed, reset the flag to false
+    dialogRef.afterClosed().subscribe(() => {
+      this.dialogueOpen = false;
+    });
+  }
+}
 
  applyFilter(event: Event) {
    const filterValue = (event.target as HTMLInputElement).value;
@@ -87,17 +90,16 @@ displayedColumns: string[] = ['username','isAdmin','Actions'];
  }
 
  modifyUser(user: User) {
-   console.log(user);
-   if(this.dialog.openDialogs.length == 0){
+   this.user=user;
+  //  if(this.dialog.openDialogs.length == 0){
    const dialogRef = this.dialog.open(AddUserComponent, {
      width: '450px',
     hasBackdrop: false,
      data: {
        buttonLabel: 'Modify',
        user: user,
-       buttonFunction: this.modify,
-
-     }
+       buttonFunction: this.modifyUser.bind(this),
+        }
    });
 
    dialogRef.afterClosed().subscribe(result => {
@@ -108,7 +110,7 @@ displayedColumns: string[] = ['username','isAdmin','Actions'];
        console.log('Dialog closed without result');
      }
    });
- }
+//  }
 }
 modify(user: User) {
   this.userService.getUserId(user.name).pipe(
