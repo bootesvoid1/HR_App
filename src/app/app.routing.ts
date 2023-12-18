@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-
 import { FullComponent } from './layouts/full/full.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './services/auth-guard.service';
 
 export const AppRoutes: Routes = [
   {
@@ -9,11 +9,12 @@ export const AppRoutes: Routes = [
     redirectTo: 'Login',
     pathMatch: 'full'
   },
-  
+
   {
     path: 'Login',
+
     component: LoginComponent
-  },
+      },
   {
     path: '',
 
@@ -29,11 +30,14 @@ export const AppRoutes: Routes = [
       },
       {
         path: '',
+
         loadChildren:
           () => import('./material-component/material.module').then(m => m.MaterialComponentsModule)
       },
       {
         path: 'dashboard',
+        canActivate : [AuthGuard],
+      canActivateChild: [AuthGuard],
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
       }
     ]

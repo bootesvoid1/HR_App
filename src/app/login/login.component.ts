@@ -25,27 +25,35 @@ export class LoginComponent implements OnInit {
   constructor(private _router:Router,private authService: AuthService, private storageService: StorageService) { }
 
   ngOnInit(): void {
+    localStorage.clear();
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
       const isAdmin = JSON.parse(window.localStorage.getItem('isAdmin') as string);
       this.isAdmin = isAdmin;
-      this._router.navigate(['certificate']);
     }
    }
   onSubmit(): void {
-    console.log(this.form)
+    // console.log(this.form)
     const { username, password } = this.form;
 
-    this.authService.login(username, password).subscribe(
-      (response: any) => {
-
+    this.authService.login(username, password).subscribe({
+      next: response =>{
         this.storageService.saveToken(response.accessToken);
+
       },
-      (error) => {
+      error : error=>{
         this.errorMessage = error.message;
         this.isLoginFailed = true;
-      })
 
+      },
+      complete : ()=>{
+        this.authService.setLoginStatus(true);
+
+        this._router.navigate(['certificate']);
+
+      }
+    }
+    )
   }
 
   reloadPage(): void {

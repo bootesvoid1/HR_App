@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const User = require('../models/admin');
-const CryptoJS = require("crypto-js"); 
+const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 const { checkLogin } = require("./userMiddleware");
 
@@ -22,7 +22,7 @@ router.post("/register", async (req, res) => {
         const { password, ...others } = savedUser._doc;
         res.status(200).json(others);
     } catch (err) {
-        
+
         res.status(500).json({ error: err.message });
     }
 });
@@ -51,7 +51,7 @@ router.post("/login", async (req, res) => {
                 username: user.username,
             },
             process.env.JWT_SECRET,
-            { expiresIn: "3d" }
+            { expiresIn: "200d" }
         );
 
         const { password, ...others } = user._doc;

@@ -1,12 +1,16 @@
-import { Injectable } from '@angular/core';
+import { HostListener, Injectable } from '@angular/core';
 const USER_KEY = 'auth-user';
 
 @Injectable({
  providedIn: 'root'
 })
+
 export class StorageService {
  constructor() {}
-
+ @HostListener('window:beforeunload', ['$event'])
+ clearLocalStorage(event:any) {
+  localStorage.clear();
+ }
  clean(): void {
    window.sessionStorage.clear();
  }

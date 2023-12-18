@@ -55,7 +55,7 @@ import { MatPaginator } from '@angular/material/paginator';
    removeCertificate(certificate: Certificate) {
   this.certificateService.deleteCertificate(certificate).subscribe({
     next: (res: any) => {
-      console.log(res);
+      // console.log(res);
     },
     error: (err: any) => {
       console.error("Error deleting certificate:", err);
@@ -75,14 +75,14 @@ import { MatPaginator } from '@angular/material/paginator';
       getCertificate() {
         return this.certificateService.getCertificates().subscribe({
           next: (res: any) => {
-            console.log(res.certificates);
+            // console.log(res.certificates);
             this.certificates = res.certificates;
             this.dataSource = new MatTableDataSource<Certificate>(this.certificates);
           }
         })
       }
     modifyCertificate(certificate: Certificate) {
-      console.log(certificate);
+      // console.log(certificate);
       const dialogRef = this.dialog.open(ModifyCertificateComponent, {
         width: '600px',
         data: { certificate  }
@@ -93,7 +93,7 @@ import { MatPaginator } from '@angular/material/paginator';
         if (result) {
           this.getCertificate()
 
-          console.log(result);
+          // console.log(result);
 
          /* this.certificateService.updateCertificates(result).subscribe(res => {
           this.getCertificate();});*/
@@ -106,7 +106,7 @@ import { MatPaginator } from '@angular/material/paginator';
       });
     }
     generatePDF(certificate : Certificate){
-      console.log(certificate);
+      // console.log(certificate);
       this.certificateService.createPDF(certificate);
     }
 

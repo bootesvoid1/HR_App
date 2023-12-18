@@ -5,7 +5,8 @@ import {MatDialog } from '@angular/material/dialog';
 import { AddUserComponent } from '../add-user/add-user.component';
 import { UserService } from '../services/user.service';
 import { MatPaginator } from '@angular/material/paginator';
-
+import { UserDTO } from '../add-user/user-pdo';
+import { switchMap } from 'rxjs';
 @Component({
  selector: 'app-user-list',
  templateUrl: './user-list.component.html',
@@ -27,17 +28,26 @@ displayedColumns: string[] = ['username','isAdmin','Actions'];
 //   {name:"user2",password:"pass2",isAdmin:false}
 
 // ]
-this.dataSource = new MatTableDataSource<User>(this.users);
+// this.dataSource = new MatTableDataSource<User>(this.users);
  }
  ngAfterViewInit() {
   this.dataSource.paginator = this.paginator;
  }
  deleteUser(user:any) {
-   this.userService.deleteUser(user)
+  this.userService.deleteUser(user).subscribe(
+    (response) => {
+      console.log('User deleted successfully:', response);
+      this.getUsers();
+    },
+    (error) => {
+      console.error('Error deleting user:', error);
+      // Handle error if needed
+    }
+  );
  }
 
  addUser() {
-   console.log(this.user);
+  //  console.log(this.user);
    const dialogRef = this.dialog.open(AddUserComponent, {
      width: '450px',
      data: {
@@ -65,22 +75,28 @@ this.dataSource = new MatTableDataSource<User>(this.users);
  getUsers() {
    this.userService.getUsers().subscribe({
      next : (res:any)=>{
-      // console.log(res);
+      console.log(res);
+      this.dataSource = new MatTableDataSource<User>(res);
+      console.log(this.dataSource)
+
       // console.log(res.users);
-      //  this.users = res.users;
-       this.dataSource = new MatTableDataSource<User>(res);
+       this.users = res.users;
+      //  this.dataSource = new MatTableDataSource<User>(this.users);
      }
    });
  }
 
  modifyUser(user: User) {
    console.log(user);
+   if(this.dialog.openDialogs.length == 0){
    const dialogRef = this.dialog.open(AddUserComponent, {
      width: '450px',
+    hasBackdrop: false,
      data: {
        buttonLabel: 'Modify',
        user: user,
        buttonFunction: this.modify,
+
      }
    });
 
@@ -93,29 +109,25 @@ this.dataSource = new MatTableDataSource<User>(this.users);
      }
    });
  }
-
- modify(user: User) {
-  this.userService.getUserId(user.name).subscribe(
-  (id: string) => {
-   this.userService.modifyUser(id, user).subscribe(
+}
+modify(user: User) {
+  this.userService.getUserId(user.name).pipe(
+    switchMap((id: string) => this.userService.modifyUser(id, user))
+  ).subscribe(
     (response: User) => {
       // Handle the response
       // Update the user data in your component
       this.user = response;
+      console.log('User modified successfully', response);
     },
     (error) => {
       // Handle the error
+      console.error('Error modifying user', error);
     }
-   );
-  },
-  (error) => {
-   // Handle the error
-  }
   );
- }
+}
 
-
- add(user: User) {
+ add(user: UserDTO) {
    this.userService.addUser(user);
  }
 }

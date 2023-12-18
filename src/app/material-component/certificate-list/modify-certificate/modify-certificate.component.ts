@@ -18,11 +18,11 @@ export class ModifyCertificateComponent implements OnInit{
     public data: { certificates: Certificate[], certificate: Certificate }) {
 
     if (data){
-      console.log(data)
+      // console.log(data)
 
     this.certificates = data.certificates;
     this.certificate = { ...data.certificate };}
-    console.log(this.certificate)
+    // console.log(this.certificate)
   }
   public certificateForm: FormGroup=this.createBluePrint(this.data);
 
@@ -45,7 +45,7 @@ export class ModifyCertificateComponent implements OnInit{
           },
           error : err=>{
             this.dialogRef.close();
-            console.log(err);
+            // console.log(err);
           },
           complete :()=>{
             this.dialogRef.close({message : 'Modified successfully' });
@@ -67,7 +67,7 @@ export class ModifyCertificateComponent implements OnInit{
      this.dialogRef.close();
   }
   createBluePrint(data?:any){
-    console.log(data,'here')
+    // console.log(data,'here')
     return this.fb.group({
      candidateName: [data && data.certificate  && data.certificate.candidateName ?data.certificate.candidateName : '',[Validators.required]  ],
      courseName : [data && data.certificate && data.certificate.courseName ?data.certificate.courseName : ''  ],

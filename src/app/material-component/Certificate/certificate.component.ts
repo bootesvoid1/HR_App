@@ -25,7 +25,7 @@ export class CertificateComponent implements OnInit {
 
  saveCertificate(): void {
     if (this.certificateForm.valid) {
-      console.log(this.certificateForm.valid);
+      // console.log(this.certificateForm.valid);
       const form = this.certificateForm.value;
       const ID = uuidv4();
       this.certificate = new Certificate(

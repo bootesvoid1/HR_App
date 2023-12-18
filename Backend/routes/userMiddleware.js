@@ -4,8 +4,8 @@ const checkLogin = (req, res, next) => {
     const authHeader = req.headers.authorization;
 
     if (authHeader) {
-        // const token = authHeader.split(" ")[1];
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NmJhMTk1MTkyNzJjMmQ2ZTRjYjEyMyIsImlzQWRtaW4iOmZhbHNlLCJ1c2VybmFtZSI6ImF6ZXJ0cnkiLCJpYXQiOjE3MDE1NTI2NTAsImV4cCI6MTcwMTgxMTg1MH0.vFFvtp5qbtpNaUr9djl7M3pIbFDxKHrqosGjtmuxtuE'
+        const token = authHeader.split(" ")[1];
+        // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NmJhMTk1MTkyNzJjMmQ2ZTRjYjEyMyIsImlzQWRtaW4iOmZhbHNlLCJ1c2VybmFtZSI6ImF6ZXJ0cnkiLCJpYXQiOjE3MDE1NTI2NTAsImV4cCI6MTcwMTgxMTg1MH0.vFFvtp5qbtpNaUr9djl7M3pIbFDxKHrqosGjtmuxtuE'
         jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
             if (err) {
                 return res.status(401).json({ error: "Token is not valid!",message : err.message})  ;
