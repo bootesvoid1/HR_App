@@ -11,8 +11,11 @@ export class StorageService {
  clearLocalStorage(event:any) {
   localStorage.clear();
  }
+ public  isAdmin = false;
+
  clean(): void {
    window.sessionStorage.clear();
+   localStorage.clear();
  }
  public saveToken(token: string): void {
   window.localStorage.removeItem('token');
@@ -42,8 +45,11 @@ export class StorageService {
    return false;
  }
  public saveIsAdmin(isAdmin: boolean): void {
+  this.isAdmin=isAdmin;
+
   window.localStorage.removeItem('isAdmin');
   window.localStorage.setItem('isAdmin', JSON.stringify(isAdmin));
+
  }
  getToken(): string {
   return localStorage.getItem('token')!;

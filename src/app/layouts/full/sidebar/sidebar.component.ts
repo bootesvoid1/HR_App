@@ -5,6 +5,7 @@ import { DemoMaterialModule } from 'src/app/demo-material-module';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
@@ -18,6 +19,7 @@ export class AppSidebarComponent implements OnDestroy {
   private _mobileQueryListener: () => void;
 
   constructor(
+    private auth : AuthService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
     public menuItems: MenuItems
@@ -26,7 +28,9 @@ export class AppSidebarComponent implements OnDestroy {
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
-
+  logout(){
+    this.auth.logout();
+  }
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }

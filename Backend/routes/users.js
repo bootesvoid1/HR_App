@@ -45,7 +45,7 @@ const verifyCurrentPassword = async (req, res, next) => {
  };
 
 router.use(bodyParser.json());
-  router.put("/:id", verifyCurrentPassword, async (req, res) => {
+  router.put("/:id", async (req, res) => {
     try {
         const { password } = req.body;
         const updatedFields = {};
@@ -92,7 +92,7 @@ router.get("/find/:id", async (req, res) => {
 router.get("/",checkLogin ,async (req, res) => {
     try {
         const users = await User.find().limit(5).sort({ createdAt: -1 });
-        res.status(200).json(users.map(omitPassword));
+        res.status(200).json(users);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

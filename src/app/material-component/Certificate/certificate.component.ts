@@ -19,7 +19,7 @@ export class CertificateComponent implements OnInit {
     this.certificateForm = this.createBlueprint();
  }
 
- createPDF(certificate: Certificate): void {
+ createPDF(certificate: Certificate){
     this.certificateService.createPDF(certificate);
  }
 

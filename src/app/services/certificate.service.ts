@@ -60,7 +60,7 @@ export class CertificateService {
   return this.http.put(`${this.apiUrl}/certificates/${id}`, updatedData);
  }
  createPDF(certificate :Certificate) {
-
+  if (certificate){
   const pdf = new jsPDF();
   const imgData = '/assets/images/logo (1).png';
   pdf.addImage(imgData, 'JPEG', 40, 10, 120, 40);
@@ -92,6 +92,10 @@ export class CertificateService {
 
   pdf.save(certificate.candidateName + '.pdf');
 }
+else{
+alert ("You need to save the certificate before generating pdf")
+}}
+
 }
 
 

@@ -8,10 +8,16 @@ const AUTH_API = 'http://localhost:3000/api/auth/';
   providedIn: 'root',
 })
 export class AuthService {
+  isAdmin() {
+   return this.storageService.isAdmin;
+  }
+
   constructor(private http: HttpClient,private storageService:StorageService) {}
 
-
   private loggedInStatus = JSON.parse(localStorage.getItem('loggedIn') || ('false'));
+  // isAdmin(): boolean {
+  //   return JSON.parse(localStorage.getItem('isAdmin') || 'false');
+  // }
 
   setLoginStatus(value:any) {
     this.loggedInStatus = value;
@@ -19,6 +25,7 @@ export class AuthService {
   }
 
   get LoginStatus() {
+
     return JSON.parse(localStorage.getItem('loggedIn') ||
     this.loggedInStatus.toString());
   }
@@ -41,6 +48,8 @@ export class AuthService {
        'Authorization': this.accessToken ? `Bearer ${this.accessToken}` : ''
       })
      };
+     console.log("from authservice"+this.storageService.isAdmin);
+    //  console.log(this.isAdmin());
     return this.http.post(
      AUTH_API + 'login',
      {
@@ -55,8 +64,9 @@ export class AuthService {
 
       // Set the authenticated flag to true
       this._authenticated = true;
-
-      //  this.storageService.saveToken(response.accessToken);
+      // this.isAdmin= response.isAdmin;
+      // this.isAdmin = response.isAdmin;
+       this.storageService.saveToken(response.accessToken);
 
        this.storageService.saveIsAdmin(response.isAdmin);
      }),
@@ -89,6 +99,7 @@ export class AuthService {
        'Authorization': this.accessToken ? `Bearer ${this.accessToken}` : ''
       })
      };
+     this.storageService.clean();
     return this.http.post(AUTH_API + 'signout', { }, httpOptions);
   }
   handleError(error: HttpErrorResponse) {

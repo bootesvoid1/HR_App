@@ -37,7 +37,7 @@ export const AppRoutes: Routes = [
       {
         path: 'dashboard',
         canActivate : [AuthGuard],
-      canActivateChild: [AuthGuard],
+        canActivateChild: [AuthGuard],
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
       }
     ]

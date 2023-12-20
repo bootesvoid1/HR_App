@@ -30,7 +30,7 @@
           class="form-control"
           name="password"
           [(ngModel)]="form.password"
-          required
+
           minlength="6"
           #password="ngModel"
           [ngClass]="{ 'is-invalid': f.submitted && password.errors }"/>
@@ -53,7 +53,7 @@
          </mat-form-field>
            <div class="btns">
         <button mat-raised-button color="primary" type="submit"class="signup-btn buttons">
-          Create User<a href="#"></a>
+          {{data.buttonLabel}} User<a href="#"></a>
          </button>
          <button mat-raised-button color="warn" class="signup-btn buttons" (click)="cancel()">Cancel
          </button>

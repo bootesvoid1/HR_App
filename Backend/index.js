@@ -7,6 +7,7 @@ const users = require('./routes/users')
 const auth = require('./routes/auth')
 const certificate = require('./routes/certificate')
 const cors = require('cors');
+const path = require('path')
 app.use(cors({
   origin: 'http://localhost:4200',
   credentials: true}));
@@ -32,6 +33,12 @@ app.use(bodyParser.urlencoded({
 app.use('/api/users' , users)
 app.use('/api/auth', auth)
 app.use('/api/certificates',certificate)
+app.use(express.static('dist'));
+
+// Define your dynamic routes after the static middleware
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 app.listen(process.env.PORT || 3000, function () {
     console.log(`server Started on localhost port ${process.env.PORT || 3000} `);
   });

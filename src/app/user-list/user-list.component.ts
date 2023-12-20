@@ -15,7 +15,7 @@ import { switchMap } from 'rxjs';
 export class UserListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   form: { username: string, password: string, isAdmin: boolean } = { username: '', password: '', isAdmin: false };
-
+  addfct=true;
   displayedColumns: string[] = ['username','isAdmin','Actions'];
  user!:User;
  users:User[]=[];
@@ -54,10 +54,11 @@ export class UserListComponent implements OnInit {
     const dialogRef = this.dialog.open(AddUserComponent, {
       width: '450px',
       data: {
-        buttonLabel: 'Add',
+        buttonLabel: 'Create',
         user: this.user,
-        buttonFunction: this.add,
-      }
+        buttonFunction: this.modifyUser.bind(this),
+         }
+
     });
 
     // Set the flag to true when the dialogue is opened
@@ -128,7 +129,6 @@ modify(user: User) {
     }
   );
 }
-
  add(user: UserDTO) {
    this.userService.addUser(user);
  }

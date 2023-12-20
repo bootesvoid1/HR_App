@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   constructor(private _router:Router,private authService: AuthService, private storageService: StorageService) { }
 
   ngOnInit(): void {
-    localStorage.clear();
+    // localStorage.clear();
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
       const isAdmin = JSON.parse(window.localStorage.getItem('isAdmin') as string);

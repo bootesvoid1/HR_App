@@ -6,6 +6,7 @@ export class User{
   constructor(name:string,password:string,isAdmin:boolean){
     this.name = name;
    this.isAdmin=isAdmin;
+   
   //  this.password=password;
 
 }
